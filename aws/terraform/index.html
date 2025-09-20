@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PTK Sanduguan</title>
+  <meta name="description" content="PTK Sanduguan — Pekiti Tirsia Kali martial arts in Cavite headed by Tuhon Jake." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#f59e0b;--glass:rgba(255,255,255,0.03);--radius:14px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;line-height:1.5;background:linear-gradient(180deg,#071029 0%, #071a2b 100%);color:#e6eef6}
+    a{color:var(--accent);text-decoration:none}
+    header{position:sticky;top:0;backdrop-filter: blur(6px);background:linear-gradient(180deg,rgba(7,16,41,0.65),rgba(7,16,41,0.45));border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .logo{width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:700;color:#071029}
+    nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+    nav li{padding:.45rem .6rem;border-radius:10px}
+    nav li:hover{background:var(--glass)}
+    .hero{display:grid;grid-template-columns:1fr;gap:1.25rem;align-items:center;padding:3.5rem 0}
+    .hero-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1.25rem;border-radius:var(--radius);box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    h1{font-size:clamp(1.6rem,3.5vw,2.4rem);margin:.2rem 0}
+    p.lead{color:var(--muted);margin:.6rem 0 0}
+    .cta{margin-top:1rem;display:flex;gap:.6rem}
+    .btn{background:var(--accent);color:#071029;padding:.6rem .9rem;border-radius:10px;font-weight:600;border:none;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+    .stats{display:flex;gap:1rem;margin-top:1rem}
+    .stat{padding:.6rem .85rem;border-radius:10px;background:rgba(255,255,255,0.02);text-align:center}
+
+    section{padding:2.25rem 0}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .service{padding:1rem;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.015),transparent);border:1px solid rgba(255,255,255,0.02)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem}
+    .gallery img{width:100%;height:120px;object-fit:cover;border-radius:10px}
+    footer{padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
+    @media(min-width:800px){.hero-grid{grid-template-columns:1fr 420px}nav ul{gap:1rem}}
+    @media(max-width:799px){nav ul{display:none}.menu-toggle{display:inline-flex}.mobile-nav{display:none}}
+    .menu-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.04);padding:.4rem;border-radius:8px;color:var(--muted)}
+    .mobile-nav.open{display:block;padding:1rem}
+
+    .contact-form{display:grid;gap:.6rem}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:.6rem;border-radius:8px;color:inherit}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">PT</div>
+        <div>
+          <strong>PTK Sanduguan</strong>
+          <div style="font-size:.85rem;color:var(--muted)">Pekiti Tirsia Kali • Cavite</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Training</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="menu">☰</button>
+    </div>
+    <div class="mobile-nav container" id="mobileNav"></div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="card">
+          <h1>PTK Sanduguan</h1>
+          <p class="lead">PTK Sanduguan is a Pekiti Tirsia Kali martial arts group located in Cavite. It is headed by <strong>Tuhon Jake</strong>, with dedicated members including <strong>Guro Tony</strong> and <strong>Guro Enzo</strong>. The group focuses on training, discipline, and preserving the authentic Filipino martial art of Kali.</p>
+
+          <div class="cta">
+            <a class="btn" href="#programs">See Training</a>
+            <a class="btn ghost" href="#contact">Join Us</a>
+          </div>
+
+          <div class="stats" aria-hidden>
+            <div class="stat"><strong>50+</strong><div style="font-size:.85rem;color:var(--muted)">Students</div></div>
+            <div class="stat"><strong>10+</strong><div style="font-size:.85rem;color:var(--muted)">Seminars</div></div>
+            <div class="stat"><strong>3</strong><div style="font-size:.85rem;color:var(--muted)">Instructors</div></div>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h3>Our Discipline</h3>
+          <p style="color:var(--muted)">Pekiti Tirsia Kali is a close-quarter combat system from the Philippines, emphasizing edged and impact weapons, empty-hand combat, and tactical strategy.</p>
+
+          <h3 style="margin-top:1rem">Upcoming</h3>
+          <ul style="color:var(--muted);padding-left:1rem">
+            <li>Knife Fighting Seminar — Oct 20, 2025</li>
+            <li>Stick Sparring Workshop — Nov 15, 2025</li>
+            <li>Combat Tactics Training — Dec 10, 2025</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="grid-2">
+        <div class="card">
+          <h2>About PTK Sanduguan</h2>
+          <p style="color:var(--muted)">PTK Sanduguan was founded to preserve and promote the Pekiti Tirsia Kali system in Cavite. With guidance from Tuhon Jake, the group instills discipline, respect, and mastery of Kali among its members.</p>
+
+          <h4>Training Focus</h4>
+          <ul style="color:var(--muted);padding-left:1rem">
+            <li>Knife and sword drills</li>
+            <li>Single and double stick techniques</li>
+            <li>Empty-hand applications</li>
+            <li>Combat strategy and tactics</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Instructors</h2>
+          <ul style="color:var(--muted);padding-left:1rem">
+            <li><strong>Tuhon Jake</strong> — Head Instructor</li>
+            <li><strong>Guro Tony</strong> — Instructor</li>
+            <li><strong>Guro Enzo</strong> — Instructor</li>
+          </ul>
+          <p style="color:var(--muted);margin-top:1rem">Together, they uphold the tradition and authenticity of Pekiti Tirsia Kali.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="programs">
+      <h2 style="margin-bottom:.6rem">Training Programs</h2>
+      <div class="services">
+        <div class="service card">
+          <h4>Fundamentals</h4>
+          <p style="color:var(--muted)">Basic Kali strikes, footwork, and weapon handling for beginners.</p>
+        </div>
+        <div class="service card">
+          <h4>Advanced Drills</h4>
+          <p style="color:var(--muted)">Knife, sword, and stick combinations with tactical applications.</p>
+        </div>
+        <div class="service card">
+          <h4>Sparring & Application</h4>
+          <p style="color:var(--muted)">Controlled sparring sessions to apply skills in live scenarios.</p>
+        </div>
+        <div class="service card">
+          <h4>Instructor Training</h4>
+          <p style="color:var(--muted)">For senior students aspiring to teach Pekiti Tirsia Kali.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <h2 style="margin-bottom:.6rem">Gallery</h2>
+      <div class="gallery">
+        <img src="https://picsum.photos/seed/ptk1/800/600" alt="Kali training photo 1" />
+        <img src="https://picsum.photos/seed/ptk2/800/600" alt="Kali training photo 2" />
+        <img src="https://picsum.photos/seed/ptk3/800/600" alt="Seminar event" />
+        <img src="https://picsum.photos/seed/ptk4/800/600" alt="Stick drills" />
+        <img src="https://picsum.photos/seed/ptk5/800/600" alt="Knife training" />
+        <img src="https://picsum.photos/seed/ptk6/800/600" alt="Group training" />
+      </div>
+    </section>
+
+    <section id="team">
+      <h2 style="margin-bottom:.6rem">Our Team</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Tuhon Jake</h4>
+          <small style="color:var(--muted)">Head Instructor</small>
+          <p style="color:var(--muted)">Leads PTK Sanduguan with decades of experience in Pekiti Tirsia Kali.</p>
+        </div>
+        <div class="card">
+          <h4>Guro Tony</h4>
+          <small style="color:var(--muted)">Instructor</small>
+          <p style="color:var(--muted)">Dedicated to teaching and preserving Filipino martial arts.</p>
+        </div>
+        <div class="card">
+          <h4>Guro Enzo</h4>
+          <small style="color:var(--muted)">Instructor</small>
+          <p style="color:var(--muted)">Focuses on combat applications and mentoring students.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Contact Us</h2>
+          <p style="color:var(--muted)">Want to join training or invite us for a seminar? Send us a message.</p>
+
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('This site is static — replace with your form endpoint.');">
+            <input type="text" placeholder="Your name" required />
+            <input type="email" placeholder="Your email" required />
+            <input type="text" placeholder="Subject" />
+            <textarea placeholder="Message" rows="5"></textarea>
+            <div style="display:flex;gap:.5rem;margin-top:.4rem">
+              <button class="btn" type="submit">Send Message</button>
+              <a class="btn ghost" href="mailto:info@ptksanduguan.org">Email Us</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Training Location</h3>
+          <p style="color:var(--muted)">PTK Sanduguan • Cavite, Philippines</p>
+
+          <h3 style="margin-top:1rem">Follow</h3>
+          <p style="color:var(--muted)">Facebook: facebook.com/ptksanduguan<br/>Instagram: @ptk_sanduguan</p>
+
+          <h3 style="margin-top:1rem">Seminars</h3>
+          <p style="color:var(--muted)">Contact us for local and international seminar invitations.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+      <div>
+        <strong>PTK Sanduguan</strong>
+        <div style="color:var(--muted);font-size:.9rem">Pekiti Tirsia Kali • Cavite • Headed by Tuhon Jake</div>
+      </div>
+      <div style="color:var(--muted);font-size:.9rem">&copy; PTK Sanduguan — 2025</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(){
+      const m = document.getElementById('mobileNav');
+      if(!m) return;
+      m.classList.toggle('open');
+      if(m.classList.contains('open')){
+        m.innerHTML = '<div class="card"><a href="#about">About</a><br/><a href="#programs">Training</a><br/><a href="#gallery">Gallery</a><br/><a href="#contact">Contact</a></div>';
+      } else { m.innerHTML = '' }
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      })
+    });
+  </script>
+</body>
+</html>
