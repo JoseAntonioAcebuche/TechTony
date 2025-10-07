@@ -10,8 +10,8 @@
 ## 🧰 Tech Stack
 
 - **Databases**: SQL Server (Backup, Restore, Logs, Query Support)  
-- **OS**: Windows, Linux (basic admin)  
-- **Support Tools**: CCTV, POS, kiosks, peripheral devices, printers, desktop computer / Server  
+- **OS**: Windows, Linux
+- **Support Tools**: CCTV, POS, kiosks,RFID, peripheral devices, printers, desktop computer / Server  
 - **Networking**: LAN/WAN, basic Cisco config, cabling, router/switch setup  
 - **Scripting**: Bash (basic), BAT scripts  
 - **Docs**: SOP writing, incident reports, deployment logs
@@ -20,7 +20,7 @@
 
 ## 🛠️ Experience Snapshot
 
-### 🚧 **Technical Support Staff – Chase Technologies**  
+### 🚧 **Technical Support Staff (IT Administrator)– Chase Technologies**  
 📍 Alabang Town Center | *Jan 2024 – Present*  
 - Maintains SQL Server backups, restores, and system logs  
 - On-site support for kiosks, CCTV, POS systems, desktop computer  
