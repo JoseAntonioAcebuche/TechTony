@@ -245,4 +245,4 @@ The following best practices should be observed in all production Windows Server
 
 ---
 
-*Windows OS / Server Repair & Recovery Guide — Chase Technologies Corporation*
+*Windows OS / Server Repair & Recovery*
