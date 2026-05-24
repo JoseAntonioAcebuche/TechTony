@@ -1,0 +1,14 @@
+# Active Directory PowerShell Query Reference
+
+**ACEBUCHE.LOCAL**  
+Author: Jose Antonio Acebuche | May 12, 2026
+
+---
+
+## Prerequisites
+
+All queries require the ActiveDirectory PowerShell module.  
+Run on a Domain Controller or a machine with RSAT installed.
+
+```powershell
+Import-Module ActiveDirectory
