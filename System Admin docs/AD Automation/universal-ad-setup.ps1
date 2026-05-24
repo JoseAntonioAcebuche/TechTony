@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 #  UNIVERSAL AD SETUP SCRIPT
 #  Pwede gamitin sa kahit anong company
 #
@@ -25,6 +25,7 @@ $departments = @(                         # <- Palitan ng actual na departments
     "Finance",
     "HR",
     "Management"
+    "Disabled Users"
     # Dagdag pa kung kailangan:
     # "Operations",
     # "Sales",
@@ -164,16 +165,4 @@ foreach ($dept in $departments) {
     Write-Host "       │         └── FS_${dept}_ReadOnly" -ForegroundColor DarkGreen
 }
 
-Write-Host ""
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  TAPOS NA!" -ForegroundColor Cyan
-Write-Host "  Nagawa/Existing: $success items" -ForegroundColor Green
-if ($failed -gt 0) {
-Write-Host "  May error:       $failed items" -ForegroundColor Red }
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host ""
-Write-Host " SUSUNOD NA HAKBANG:" -ForegroundColor Yellow
-Write-Host " 1. I-run ang acebuche-add-users.ps1 para mag-add ng users" -ForegroundColor White
-Write-Host " 2. I-setup ang File Server at i-assign ang Security Groups" -ForegroundColor White
-Write-Host " 3. I-configure ang GPO per department" -ForegroundColor White
 Write-Host ""

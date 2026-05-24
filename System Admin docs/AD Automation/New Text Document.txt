@@ -1,0 +1,12 @@
+FirstName,LastName,Username,Department,JobTitle,Password
+Juan,Dela Cruz,HR,HR Officer,Welcome@2026!
+Maria,Santos,HR,HR Manager,Welcome@2026!
+Pedro,Reyes,Finance,Accountant,Welcome@2026!
+Ana,Garcia,Finance,Finance Manager,Welcome@2026!
+Jose,Mendoza,IT,IT Support,Welcome@2026!
+Rosa,Flores,IT,Systems Admin,Welcome@2026!
+Carlos,Ramos,Management,Department Head,Welcome@2026!
+jose,acebuche,IT,system admin,123456
+kamote,kalang,IT,support,Welcome@2026!
+love,marata,Finance,Finance secreatary,Welcom@2026!
+Ala,Cayetano,a.cayetano,IT,support,Welcom@2026!
