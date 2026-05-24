@@ -37,8 +37,10 @@ function New-BulkADUser {
         foreach ($u in $users) {
             
             # Format ang username: lowercase, walang space sa dulo, at pagdugtungin ang FN at LN
-            $username = "$($u.FirstName.ToLower().Trim()).$($u.LastName.ToLower().Replace(' ',''))"
-            
+            #$username = "$($u.FirstName.ToLower().Trim()).$($u.LastName.ToLower().Replace(' ',''))"
+            # Kunin ang username nang rekta mula sa Username column ng CSV
+            $username = $u.Username.ToLower().Trim() 
+
             # Hanapin kung saang OU dapat ilagay ang user base sa Department sa CSV
             $targetOU = $OUMapping[$u.Department]
 
