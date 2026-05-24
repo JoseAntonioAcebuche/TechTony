@@ -12,3 +12,31 @@ Run on a Domain Controller or a machine with RSAT installed.
 
 ```powershell
 Import-Module ActiveDirectory
+
+
+Domain: ACEBUCHE.LOCAL
+Requires read access to AD objects
+1 | Organizational Units (OU Tree)
+List All OUs
+Purpose
+Retrieve all Organizational Units in the domain
+Command
+PowerShell
+
+Get-ADOrganizationalUnit -Filter * |
+Select DistinguishedName |
+Sort-Object DistinguishedName
+Possible Output
+Plain text
+OU=Domain Controllers,DC=ACEBUCHE,DC=local
+OU=Finance,OU=Shadow,DC=ACEBUCHE,DC=local
+OU=HR,OU=Shadow,DC=ACEBUCHE,DC=local
+OU=IT,OU=Shadow,DC=ACEBUCHE,DC=local
+OU=Shadow,DC=ACEBUCHE,DC=local
+OU=Users,OU=Finance,OU=Shadow,DC=ACEBUCHE,DC=local
+OU=Users,OU=HR,OU=Shadow,DC=ACEBUCHE,DC=local
+OU=Users,OU=IT,OU=Shadow,DC=ACEBUCHE,DC=local
+
+Full AD Object Tree
+Purpose
+List all AD objects (OUs, computers, users) sorted by DistinguishedName
