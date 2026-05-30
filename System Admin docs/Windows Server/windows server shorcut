@@ -1,0 +1,32 @@
+# Windows Server Administrative Shortcuts (.msc) Reference Guide
+
+A quick reference sheet for essential Windows Server management consoles and tools. These shortcuts can be executed via the **Run dialog (Win + R)**, **PowerShell**, or **Command Prompt**.
+
+---
+
+## 🔐 Active Directory & Identity
+*   **`dsa.msc`** – Active Directory Users and Computers (ADUC)
+*   **`adsiedit.msc`** – ADSI Edit (Advanced AD Object Editor)
+*   **`domain.msc`** – Active Directory Domains and Trusts
+*   **`gpmc.msc`** – Group Policy Management Console
+*   **`dssite.msc`** – Active Directory Sites and Services
+
+## 🖥️ Core Infrastructure Services
+*   **`dnsmgmt.msc`** – DNS Manager
+*   **`dhcpmgmt.msc`** – DHCP Manager
+*   **`certsrv.msc`** – Certification Authority (CA)
+*   **`virtmgmt.msc`** – Hyper-V Manager
+*   **`iscsicpl.exe`** – iSCSI Initiator Configuration
+
+## ⚙️ System & Server Management
+*   **`compmgmt.msc`** – Computer Management (Shared Folders, Local Users, etc.)
+*   **`services.msc`** – Windows Services
+*   **`diskmgmt.msc`** – Disk Management
+*   **`eventvwr.msc`** – Event Viewer (Logs)
+*   **`taskschd.msc`** – Task Scheduler
+*   **`cluadmin.msc`** – Failover Cluster Manager
+
+## 🌐 Network & IIS
+*   **`ncpa.cpl`** – Network Connections (IP Configuration)
+*   **`inetmgr`** – Internet Information Services (IIS) Manager
+*   **`wf.msc`** – Windows Defender Firewall with Advanced Security
