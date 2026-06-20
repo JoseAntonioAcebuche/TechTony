@@ -1,0 +1,155 @@
+# Active Directory & GPO Backup and Recovery Guide
+
+**Prepared by:** Jose Antonio Acebuche (Tony)
+**Role:** IT Specialist, TelecConnect
+**Date:** June 21, 2026
+
+---
+
+## Overview
+
+Backing up Active Directory (AD) and Group Policy Objects (GPOs) is critical because they control the entire domain environment. System State (AD database) and GPOs should be backed up separately.
+
+---
+
+## 1. Backup Active Directory (Full Domain Backup)
+
+This protects:
+- AD database (NTDS.dit)
+- SYSVOL (GPO files)
+- Domain configuration
+
+### Method: Windows Server Backup (Recommended)
+
+**Step 1: Install feature**
+1. Open Server Manager
+2. Add Roles and Features
+3. Install: Windows Server Backup
+
+**Step 2: Run backup**
+1. Open Windows Server Backup
+2. Select: Backup Once (manual) or Backup Schedule
+3. Choose: Custom > Select System State
+
+System State includes:
+- Active Directory
+- Boot files
+- SYSVOL (important for GPOs)
+- Registry
+
+**Step 3: Choose destination**
+- External disk (recommended)
+- Network share (\\server\backup)
+
+**Step 4: Run backup**
+
+### Method: wbadmin (Command Line)
+
+Useful for scheduled/automated System State backups without GUI:
+
+```
+wbadmin start systemstatebackup -backuptarget:D:\Backups -quiet
+```
+
+---
+
+## 2. Backup GPO Only (Group Policy Backup)
+
+Useful if you only want GPO changes/versioning rather than a full System State backup.
+
+### Method A: Group Policy Management Console (GUI)
+
+1. Open: Group Policy Management (gpmc.msc)
+2. Right-click: Group Policy Objects
+3. Click: Back Up All
+4. Choose folder, e.g.: `D:\GPO_Backup\`
+5. Click Back Up
+
+### Method B: PowerShell (Best for automation)
+
+Backup all GPOs:
+```powershell
+Backup-GPO -All -Path "D:\GPO_Backup"
+```
+
+Backup single GPO:
+```powershell
+Backup-GPO -Name "Default Domain Policy" -Path "D:\GPO_Backup"
+```
+
+---
+
+## 3. Restore GPO
+
+**GUI:**
+1. GPMC > Group Policy Objects
+2. Right-click > Manage Backups
+3. Select backup > Restore
+
+**PowerShell:**
+```powershell
+Restore-GPO -Name "GPO Name" -Path "D:\GPO_Backup"
+```
+
+---
+
+## 4. Restoring Active Directory: Authoritative vs Non-Authoritative
+
+This is the critical decision point that backup guides often skip.
+
+- **Non-authoritative restore**: Brings the DC back to the state at backup time, then lets normal replication overwrite it with data from other DCs. Use this when recovering a failed/corrupted DC, not when recovering a deleted object — replication will just re-delete it.
+- **Authoritative restore**: Marks specific restored objects (e.g., a deleted OU or user) as authoritative so they replicate *out* to other DCs instead of being overwritten. Requires booting into Directory Services Restore Mode (DSRM) and using `ntdsutil`.
+
+### AD Recycle Bin (Complement, Not Replacement)
+
+If enabled, AD Recycle Bin lets you restore accidentally deleted objects (users, groups, OUs) in seconds via `Restore-ADObject`, without rebooting into DSRM or doing an authoritative restore. Note: enabling it is irreversible. Worth turning on as a first line of defense — but it doesn't replace full System State backups for DC failure/corruption scenarios.
+
+---
+
+## 5. DSRM Password
+
+Restoring System State requires booting into Directory Services Restore Mode, which needs a separate local administrator password set at DCPromo time. This password is easy to lose track of over time. Document it securely and rotate periodically:
+
+```
+ntdsutil "set dsrm password" "reset password on server null" q q
+```
+
+---
+
+## 6. Multi-DC Considerations
+
+If the environment has more than one Domain Controller:
+- After a System State restore on one DC, run `repadmin /replsummary` to confirm replication health.
+- Watch for **USN rollback** — restoring a DC from an old backup without proper non-authoritative restore procedure can cause replication corruption across the domain.
+
+---
+
+## Best Practices
+
+### Backup Frequency
+- GPO backup: after every change
+- AD System State: daily (recommended for production DC)
+
+### Storage Rule
+- Keep backups on a separate server or external storage
+- Never store backups only on the domain controller itself
+
+### Retention
+- GPO backups: 30–90 days
+- System State: 7–14 days minimum
+
+---
+
+## Quick Summary
+
+| Backup Type | Protects | Restore Method |
+|---|---|---|
+| System State | Full AD database, SYSVOL, registry, boot files | Non-authoritative (DC failure) or Authoritative (deleted object) via DSRM/ntdsutil |
+| GPO Backup | Configuration/version control | GPMC or `Restore-GPO` |
+| AD Recycle Bin | Quick object-level recovery | `Restore-ADObject` (no DSRM needed) |
+
+**System State backup = full AD protection**
+**GPO backup = configuration version control**
+**AD Recycle Bin = fast object-level recovery**
+
+Always combine all three for a complete, real-world domain recovery strategy.
