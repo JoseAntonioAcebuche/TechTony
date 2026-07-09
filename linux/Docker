@@ -1,0 +1,327 @@
+# Understanding the `.env` File for Snipe-IT Docker
+
+## What is a `.env` File?
+
+A `.env` file stores configuration values and sensitive information separately from the `docker-compose.yml` file.
+
+Instead of hardcoding passwords, database names, and application settings inside the compose file, Docker Compose reads them from the `.env` file and injects them into the containers as environment variables.
+
+Example:
+
+```env
+# Database
+MYSQL_ROOT_PASSWORD=YourRootPassword123!
+MYSQL_DATABASE=snipeit
+MYSQL_USER=snipeit_user
+MYSQL_PASSWORD=YourStrongPassword123!
+
+# Snipe-IT
+APP_URL=http://localhost:9001
+APP_KEY=base64:GENERATE_NEW_KEY
+APP_TIMEZONE=Asia/Manila
+
+DB_CONNECTION=mysql
+DB_HOST=snipe-db
+DB_PORT=3306
+DB_DATABASE=snipeit
+DB_USERNAME=snipeit_user
+DB_PASSWORD=YourStrongPassword123!
+```
+
+---
+
+# Database Variables
+
+## MYSQL_ROOT_PASSWORD
+
+```env
+MYSQL_ROOT_PASSWORD=YourRootPassword123!
+```
+
+The password for the MariaDB **root** account.
+
+### Purpose
+
+- Database administration
+- Backup and Restore
+- Creating new users
+- Managing permissions
+
+---
+
+## MYSQL_DATABASE
+
+```env
+MYSQL_DATABASE=snipeit
+```
+
+Automatically creates the database when MariaDB starts for the first time.
+
+Example:
+
+```
+Database Name:
+snipeit
+```
+
+---
+
+## MYSQL_USER
+
+```env
+MYSQL_USER=snipeit_user
+```
+
+Creates a dedicated database user for Snipe-IT.
+
+Using a dedicated user is more secure than allowing the application to connect as the root user.
+
+---
+
+## MYSQL_PASSWORD
+
+```env
+MYSQL_PASSWORD=YourStrongPassword123!
+```
+
+Password assigned to `MYSQL_USER`.
+
+This password is used by Snipe-IT to connect to MariaDB.
+
+---
+
+# Snipe-IT Variables
+
+## APP_URL
+
+```env
+APP_URL=http://localhost:9001
+```
+
+Defines the URL where users will access the application.
+
+Examples:
+
+Local machine
+
+```
+http://localhost:9001
+```
+
+Local network
+
+```
+http://192.168.1.100:9001
+```
+
+Production
+
+```
+https://assets.company.com
+```
+
+---
+
+## APP_KEY
+
+```env
+APP_KEY=base64:GENERATE_NEW_KEY
+```
+
+Laravel encryption key.
+
+Used for:
+
+- Encrypting data
+- Sessions
+- Cookies
+- Application security
+
+> **Important**
+>
+> Never change the APP_KEY after the application already contains data.
+> Doing so may invalidate encrypted data and user sessions.
+
+---
+
+## APP_TIMEZONE
+
+```env
+APP_TIMEZONE=Asia/Manila
+```
+
+Sets the application's timezone.
+
+Example:
+
+```
+Asia/Manila
+```
+
+---
+
+# Database Connection Variables
+
+These variables tell Snipe-IT how to connect to MariaDB.
+
+---
+
+## DB_CONNECTION
+
+```env
+DB_CONNECTION=mysql
+```
+
+Specifies the database engine.
+
+Example:
+
+```
+mysql
+```
+
+---
+
+## DB_HOST
+
+```env
+DB_HOST=snipe-db
+```
+
+The hostname of the MariaDB container.
+
+Because both containers are on the same Docker network, Docker automatically resolves:
+
+```
+snipe-db
+```
+
+to the MariaDB container.
+
+---
+
+## DB_PORT
+
+```env
+DB_PORT=3306
+```
+
+Default MariaDB/MySQL port.
+
+---
+
+## DB_DATABASE
+
+```env
+DB_DATABASE=snipeit
+```
+
+Database name that Snipe-IT connects to.
+
+---
+
+## DB_USERNAME
+
+```env
+DB_USERNAME=snipeit_user
+```
+
+Database username used by Snipe-IT.
+
+---
+
+## DB_PASSWORD
+
+```env
+DB_PASSWORD=YourStrongPassword123!
+```
+
+Password for the database user.
+
+---
+
+# How Docker Uses the `.env` File
+
+When you run:
+
+```bash
+docker compose up -d
+```
+
+Docker Compose performs the following steps:
+
+1. Reads the `.env` file.
+2. Finds all variables referenced in `docker-compose.yml`.
+3. Replaces variables such as:
+
+```yaml
+MYSQL_DATABASE: ${MYSQL_DATABASE}
+```
+
+with
+
+```yaml
+MYSQL_DATABASE: snipeit
+```
+
+4. Passes the values into the containers as environment variables.
+
+---
+
+# Advantages of Using `.env`
+
+- Keeps passwords outside of `docker-compose.yml`
+- Easier configuration management
+- Simplifies migration to another server
+- Supports Development, Testing, and Production environments
+- Cleaner Docker Compose files
+- Reduces duplicated configuration
+
+---
+
+# Best Practices
+
+- Never commit real passwords to a public GitHub repository.
+- Use strong passwords.
+- Keep backups of your `.env` file.
+- Store production secrets securely.
+- Keep the `.env` file in the same directory as `docker-compose.yml`.
+
+---
+
+# Relationship Between `.env` and `docker-compose.yml`
+
+```
+           .env
+             │
+             ▼
+Docker Compose
+             │
+             ▼
+Environment Variables
+             │
+     ┌───────┴────────┐
+     ▼                ▼
+MariaDB         Snipe-IT
+```
+
+The `.env` file provides configuration values.
+
+`docker-compose.yml` consumes those values.
+
+The containers receive them as environment variables when they start.
+
+---
+
+# Summary
+
+The `.env` file separates configuration from application code.
+
+It stores:
+
+- Database credentials
+- Application settings
+- Connection information
+- Security keys
+
+Using a `.env` file makes Docker deployments cleaner, more secure, easier to maintain, and easier to migrate between servers.
