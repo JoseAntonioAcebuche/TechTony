@@ -1,0 +1,3 @@
+mssql-server/.env
+mssql-server/wwi.bak
+*.bak
