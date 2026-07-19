@@ -1,0 +1,143 @@
+# Snipe-IT Environment Configuration
+
+This document explains the environment variables used for deploying **Snipe-IT** with **MariaDB** using Docker Compose.
+
+---
+
+# MariaDB Configuration
+
+These variables configure the MariaDB database server.
+
+```env
+MYSQL_ROOT_PASSWORD=YourRootPassword
+MYSQL_DATABASE=snipeit
+MYSQL_USER=snipeit_user
+MYSQL_PASSWORD=YourUserPassword
+```
+
+| Variable | Description |
+|----------|-------------|
+| `MYSQL_ROOT_PASSWORD` | Password for the MariaDB root account. |
+| `MYSQL_DATABASE` | Database automatically created during the first startup. |
+| `MYSQL_USER` | Application database user. |
+| `MYSQL_PASSWORD` | Password for the application database user. |
+
+> **Security Tip**
+>
+> Use strong passwords and never commit your `.env` file to Git.
+
+---
+
+# Snipe-IT Configuration
+
+Application-specific settings.
+
+```env
+APP_URL=http://localhost:9001
+APP_KEY=base64:
+APP_TIMEZONE=Asia/Manila
+```
+
+| Variable | Description |
+|----------|-------------|
+| `APP_URL` | URL used to access the Snipe-IT web interface. |
+| `APP_KEY` | Laravel application encryption key. Generate this after deployment. |
+| `APP_TIMEZONE` | Timezone used by the application. |
+
+---
+
+# Database Connection
+
+These settings tell Snipe-IT how to connect to the MariaDB container.
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=snipe-db
+DB_PORT=3306
+DB_DATABASE=snipeit
+DB_USERNAME=snipeit_user
+DB_PASSWORD=YourUserPassword
+```
+
+| Variable | Description |
+|----------|-------------|
+| `DB_CONNECTION` | Database driver used by Snipe-IT. |
+| `DB_HOST` | MariaDB container hostname (Docker service name). |
+| `DB_PORT` | MariaDB listening port. |
+| `DB_DATABASE` | Database name. |
+| `DB_USERNAME` | Database username. |
+| `DB_PASSWORD` | Database user password. |
+
+---
+
+# Complete Example
+
+```env
+# =====================================
+# MariaDB Configuration
+# =====================================
+
+MYSQL_ROOT_PASSWORD=StrongRootPassword123!
+MYSQL_DATABASE=snipeit
+MYSQL_USER=snipeit_user
+MYSQL_PASSWORD=StrongUserPassword123!
+
+# =====================================
+# Snipe-IT Configuration
+# =====================================
+
+APP_URL=http://localhost:9001
+APP_KEY=base64:
+APP_TIMEZONE=Asia/Manila
+
+# =====================================
+# Database Connection
+# =====================================
+
+DB_CONNECTION=mysql
+DB_HOST=snipe-db
+DB_PORT=3306
+DB_DATABASE=snipeit
+DB_USERNAME=snipeit_user
+DB_PASSWORD=StrongUserPassword123!
+```
+
+---
+
+# Generate the Application Key
+
+After the containers are running, generate the Laravel application key.
+
+```bash
+docker compose exec snipe-it php artisan key:generate
+```
+
+The generated key will look similar to:
+
+```env
+APP_KEY=base64:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+```
+
+Copy this value into your `.env` file.
+
+---
+
+# Security Best Practices
+
+- Store secrets in a `.env` file.
+- Add `.env` to `.gitignore`.
+- Use strong, unique passwords.
+- Never share your production credentials publicly.
+- Back up your database regularly.
+- Rotate passwords periodically.
+
+---
+
+# Deployment Checklist
+
+- ✅ Create the `.env` file
+- ✅ Configure MariaDB credentials
+- ✅ Configure Snipe-IT settings
+- ✅ Start the containers with Docker Compose
+- ✅ Generate the `APP_KEY`
+- ✅ Verify that the application connects successfully to MariaDB
