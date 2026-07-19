@@ -1,3 +1,6 @@
-mssql-server/.env
-mssql-server/wwi.bak
+docker-app/mssql-server/.env
+docker-app/mssql-server/wwi.bak
+docker-app/snipe-it/db_data/
+docker-app/snipe-it/.env
 *.bak
+*.sql
