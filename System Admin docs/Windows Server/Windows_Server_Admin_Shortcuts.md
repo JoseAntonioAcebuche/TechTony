@@ -12,6 +12,7 @@ A quick reference sheet for essential Windows Server management consoles and too
 - `dssite.msc` – Active Directory Sites and Services
 - `lusrmgr.msc` – Local Users and Groups
 - `azman.msc` – Authorization Manager
+- `sysdm.cpl` – System Properties panel
 
 ---
 
