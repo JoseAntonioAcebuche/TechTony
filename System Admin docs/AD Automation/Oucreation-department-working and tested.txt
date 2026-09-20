@@ -1,0 +1,90 @@
+# ============================================================
+# TOOL NAME: New-ADInfrastructure (Modular Version)
+# PURPOSE: Create Department OUs, Sub-OUs, and Security Groups
+# CREATED BY: Jose Antonio Acebuche
+# ============================================================
+
+function New-ADInfrastructure {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$DomainDN, # e.g., "DC=server,DC=com"
+
+        [Parameter(Mandatory=$true)]
+        [string[]]$Departments, # e.g., @("IT", "Finance", "HR", "Management")
+
+        [Parameter(Mandatory=$false)]
+        [string[]]$SubOUs = @("Users", "Computers"),
+
+        [Parameter(Mandatory=$false)]
+        [string[]]$AccessLevels = @("FullControl", "ReadOnly")
+    )
+
+    process {
+        Write-Host "[START] Provisioning AD Infrastructure..." -ForegroundColor Yellow
+
+        foreach ($dept in $Departments) {
+            
+            # 1. CHECK & CREATE DEPARTMENT OU UNDER DOMAIN ROOT
+            $deptPath = "OU=$dept,$DomainDN"
+            $deptOUExists = Get-ADOrganizationalUnit -Filter "DistinguishedName -eq '$deptPath'" -ErrorAction SilentlyContinue
+
+            if ($deptOUExists) {
+                Write-Host "  [SKIP] Department OU already exists: $dept" -ForegroundColor DarkYellow
+            } else {
+                try {
+                    New-ADOrganizationalUnit -Name $dept -Path $DomainDN -ErrorAction Stop
+                    Write-Host "  [OK] Created Dept OU: $dept" -ForegroundColor Green
+                } catch {
+                    Write-Host "  [ERROR] Failed to create OU=$dept : $($_.Exception.Message)" -ForegroundColor Red
+                }
+            }
+
+            # 2. CHECK & CREATE SUB-OUs (Users & Computers)
+            foreach ($sub in $SubOUs) {
+                $subPath = "OU=$sub,OU=$dept,$DomainDN"
+                $subOUExists = Get-ADOrganizationalUnit -Filter "DistinguishedName -eq '$subPath'" -ErrorAction SilentlyContinue
+
+                if ($subOUExists) {
+                    Write-Host "      [SKIP] Sub-OU already exists: $sub (in $dept)" -ForegroundColor DarkYellow
+                } else {
+                    try {
+                        New-ADOrganizationalUnit -Name $sub -Path "OU=$dept,$DomainDN" -ErrorAction Stop
+                        Write-Host "      [OK] Created Sub-OU: $sub" -ForegroundColor Green
+                    } catch {
+                        Write-Host "      [ERROR] Failed to create Sub-OU=$sub : $($_.Exception.Message)" -ForegroundColor Red
+                    }
+                }
+            }
+
+            # 3. CHECK & CREATE SECURITY GROUPS INSIDE OU=Users
+            $userOUPath = "OU=Users,OU=$dept,$DomainDN"
+
+            foreach ($access in $AccessLevels) {
+                $groupName = "FS_${dept}_${access}"
+                $groupExists = Get-ADGroup -Filter "Name -eq '$groupName'" -ErrorAction SilentlyContinue
+
+                if ($groupExists) {
+                    Write-Host "      [SKIP] Group already exists: $groupName" -ForegroundColor DarkYellow
+                } else {
+                    try {
+                        New-ADGroup -Name $groupName -GroupScope Global -GroupCategory Security `
+                            -Path $userOUPath -Description "File Server Group - $dept ($access)" -ErrorAction Stop
+                        Write-Host "      [OK] Created Group: $groupName inside $userOUPath" -ForegroundColor Cyan
+                    } catch {
+                        Write-Host "      [ERROR] Failed to create Group $groupName : $($_.Exception.Message)" -ForegroundColor Red
+                    }
+                }
+            }
+        }
+
+        Write-Host "`n[SUCCESS] AD Infrastructure setup completed!" -ForegroundColor Green
+    }
+}
+
+
+# ============================================================
+# CONTROL PANEL
+# ============================================================
+New-ADInfrastructure -DomainDN "DC=server,DC=com" `
+                    -Departments @("IT", "Finance", "HR", "Management")
